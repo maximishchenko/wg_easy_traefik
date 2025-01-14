@@ -5,27 +5,18 @@ networks:
 
 volumes:
   letsencrypt:
-  traefik:
   wg-easy:
 
 
 services:
   wg-easy:
     labels:
-      # traefik
       - "traefik.enable=true"
       - "traefik.http.services.WireGuardService.loadbalancer.server.port=${PORT}"
-      # http to https
       - "traefik.http.routers.WireGuardRoute.service=WireGuardService"
-      # ⚠️ Required:
-      # Change this to your host's public address
       - "traefik.http.routers.WireGuardRoute.rule=Host(`${WG_HOST}`)"
       - "traefik.http.routers.WireGuardRoute.entrypoints=http"
-      # - "traefik.http.routers.WireGuardRoute.middlewares=HttpToHttpsRedirectMiddleware"
-      # https
       - "traefik.http.routers.WireGuardRouteSSL.service=WireGuardService"
-      # ⚠️ Required:
-      # Change this to your host's public address
       - "traefik.http.routers.WireGuardRouteSSL.rule=Host(`${WG_HOST}`)"
       - "traefik.http.routers.WireGuardRouteSSL.entrypoints=https"
       - "traefik.http.routers.WireGuardRouteSSL.tls.certresolver=letsencrypt"
@@ -54,13 +45,21 @@ services:
     container_name: traefik
     env_file:
       - .env
+    command:
+      - "--providers.docker"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--providers.docker.network=${NETWORK}"
+      - "--entrypoints.http.address=:80"
+      - "--entrypoints.https.address=:443"
+      - "--certificatesresolvers.letsencrypt.acme.tlschallenge=true"
+      - "--certificatesresolvers.letsencrypt.acme.email=${LE_EMAIL}"
+      - "--certificatesresolvers.letsencrypt.acme.storage=/letsencrypt/acme.json"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
-      - ./traefik:/etc/traefik
       - ./letsencrypt:/letsencrypt
     networks:
       - net
     ports:
       - "80:80"
       - "443:443"
-      - "8080:8080"
