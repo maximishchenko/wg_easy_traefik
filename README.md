@@ -1,12 +1,12 @@
 ### Установка Docker и GIT
 ```shell
-apt update && apt upgrade -y && apt install git -y
+apt update && apt upgrade -y && apt install sudo git -y
 curl -fsSL https://get.docker.com -o get-docker.sh
 sudo sh get-docker.sh
 ```
 ### Создание каталога для хранения конфигурации контейнеров
 ```shell
-mkdir /apps
+mkdir /apps && cd /apps
 ```
 
 ### Клонирование репозитория
@@ -16,7 +16,7 @@ git clone git@github.com:maximishchenko/wg_easy_traefik.git
 
 ### Перейти в каталог с проектом
 ```shell
-cd /apps/wg_easy_traefik
+cd wg_easy_traefik
 ```
 
 ### Скопировать шаблон параметров
