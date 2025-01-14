@@ -6,7 +6,7 @@ sudo sh get-docker.sh
 ```
 ### Клонирование репозитория
 ```shell
-git clone ...
+git clone git@github.com:maximishchenko/wg_easy_traefik.git
 ```
 
 ### Перейти в каталог с проектом
