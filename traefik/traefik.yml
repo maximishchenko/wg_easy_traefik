@@ -20,7 +20,7 @@ entrypoints:
 certificatesresolvers:
   letsencrypt:
     acme:
-      email: ${ACME_EMAIL}
+      email: ${LE_EMAIL}
       storage: /letsencrypt/acme.json
       tlschallenge: true
       httpChallenge:

@@ -1,4 +1,4 @@
-### Установка Docker и GIT
+### Установка Docker, GIT, sudo
 ```shell
 apt update && apt upgrade -y && apt install sudo git -y
 curl -fsSL https://get.docker.com -o get-docker.sh
@@ -38,3 +38,14 @@ docker compose up -d
 ```shell
 docker run --rm -it ghcr.io/wg-easy/wg-easy wgpw 'YOUR_PASSWORD'
 ```
+
+### Используемые переменные окружения (обязательные)
+
+| Переменная окружения  | Описание |
+| ------------- | ------------- |
+| PASSWORD_HASH  | хэш пароля панели wg-easy (см. предыдущий пункт)  |
+| WG_HOST  | FQDN панели wg-easy  |
+| WG_PORT  | UDP-порт сервера wireguard  |
+| PORT  | TCP-порт панели wg-easy  |
+| LE_EMAIL  | email для запроса сертификата LetsEncrypt  |
+| NETWORK  | имя внутренней сети  |
