@@ -1,0 +1,4 @@
+letsencrypt/
+wg-easy/
+dashboard/
+.env
