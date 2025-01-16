@@ -5,6 +5,7 @@ networks:
 
 volumes:
   letsencrypt:
+  htpasswd:
   wg-easy:
 
 
@@ -16,8 +17,10 @@ services:
       - "traefik.http.routers.WireGuardRoute.service=WireGuardService"
       - "traefik.http.routers.WireGuardRoute.rule=Host(`${WG_HOST}`)"
       - "traefik.http.routers.WireGuardRoute.entrypoints=http"
+      - "traefik.http.routers.WireGuardRoute.middlewares=panel-auth"
       - "traefik.http.routers.WireGuardRouteSSL.service=WireGuardService"
       - "traefik.http.routers.WireGuardRouteSSL.rule=Host(`${WG_HOST}`)"
+      - "traefik.http.routers.WireGuardRouteSSL.middlewares=panel-auth"
       - "traefik.http.routers.WireGuardRouteSSL.entrypoints=https"
       - "traefik.http.routers.WireGuardRouteSSL.tls.certresolver=letsencrypt"
     env_file:
@@ -56,9 +59,13 @@ services:
       - "--certificatesresolvers.letsencrypt.acme.tlschallenge=true"
       - "--certificatesresolvers.letsencrypt.acme.email=${LE_EMAIL}"
       - "--certificatesresolvers.letsencrypt.acme.storage=/letsencrypt/acme.json"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.middlewares.panel-auth.basicauth.usersfile=/htpasswd/users"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - ./letsencrypt:/letsencrypt
+      - ./htpasswd:/htpasswd
     networks:
       - net
     ports:
