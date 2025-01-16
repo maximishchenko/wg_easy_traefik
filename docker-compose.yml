@@ -50,6 +50,7 @@ services:
       - "--providers.docker=true"
       - "--providers.docker.exposedbydefault=false"
       - "--providers.docker.network=${NETWORK}"
+      - "--log.level=${LOG_LEVEL}"
       - "--entrypoints.http.address=:80"
       - "--entrypoints.https.address=:443"
       - "--certificatesresolvers.letsencrypt.acme.tlschallenge=true"

@@ -41,6 +41,8 @@ docker run --rm -it ghcr.io/wg-easy/wg-easy wgpw 'YOUR_PASSWORD'
 
 ### Используемые переменные окружения (обязательные)
 
+> Помимо перечисленных обязательных переменных окружения будут справедливы все переменные окружения, используемые traefik и wg-easy
+
 | Переменная окружения  | Описание |
 | ------------- | ------------- |
 | PASSWORD_HASH  | хэш пароля панели wg-easy (см. предыдущий пункт)  |
@@ -49,3 +51,4 @@ docker run --rm -it ghcr.io/wg-easy/wg-easy wgpw 'YOUR_PASSWORD'
 | PORT  | TCP-порт панели wg-easy  |
 | LE_EMAIL  | email для запроса сертификата LetsEncrypt  |
 | NETWORK  | имя внутренней сети  |
+| LOG_LEVEL  | уровень логирования  |
