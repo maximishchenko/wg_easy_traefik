@@ -1,7 +1,7 @@
 networks:
   net:
     external: false
-    name: ${NETWORK}
+    name: traefik_network
 
 volumes:
   letsencrypt:
@@ -17,10 +17,8 @@ services:
       - "traefik.http.routers.WireGuardRoute.service=WireGuardService"
       - "traefik.http.routers.WireGuardRoute.rule=Host(`${WG_HOST}`)"
       - "traefik.http.routers.WireGuardRoute.entrypoints=http"
-      - "traefik.http.routers.WireGuardRoute.middlewares=panel-auth"
       - "traefik.http.routers.WireGuardRouteSSL.service=WireGuardService"
       - "traefik.http.routers.WireGuardRouteSSL.rule=Host(`${WG_HOST}`)"
-      - "traefik.http.routers.WireGuardRouteSSL.middlewares=panel-auth"
       - "traefik.http.routers.WireGuardRouteSSL.entrypoints=https"
       - "traefik.http.routers.WireGuardRouteSSL.tls.certresolver=letsencrypt"
     env_file:
@@ -52,7 +50,7 @@ services:
       - "--providers.docker"
       - "--providers.docker=true"
       - "--providers.docker.exposedbydefault=false"
-      - "--providers.docker.network=${NETWORK}"
+      - "--providers.docker.network=traefik_network"
       - "--log.level=${LOG_LEVEL}"
       - "--entrypoints.http.address=:80"
       - "--entrypoints.https.address=:443"
@@ -61,13 +59,11 @@ services:
       - "--certificatesresolvers.letsencrypt.acme.storage=/letsencrypt/acme.json"
     labels:
       - "traefik.enable=true"
-      - "traefik.http.middlewares.panel-auth.basicauth.usersfile=/htpasswd/users"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - ./letsencrypt:/letsencrypt
-      - ./htpasswd:/htpasswd
     networks:
       - net
     ports:
       - "80:80"
-      - "${HTTPS_PANEL_PORT}:443"
+      - "443:443"

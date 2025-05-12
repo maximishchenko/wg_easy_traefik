@@ -39,19 +39,6 @@ docker compose up -d
 docker run --rm -it ghcr.io/wg-easy/wg-easy wgpw 'YOUR_PASSWORD'
 ```
 
-### BasicAuth
-
-По умолчанию предусмотрен механизм базовой аутентификации браузера
-Пользователи и хэши их паролей должны быть перечислены в файле htpasswd/users
-
-Для добавления пользователя необходимо выполнить:
-
-> <USERNAME> и <PASSWORD> необходимо заменить на требуемые имя пользователя и пароль
-
-```shell
-docker run --rm -ti xmartlabs/htpasswd <USERNAME> <PASSWORD> >> htpasswd/users
-```
-
 ### Используемые переменные окружения (обязательные)
 
 > Помимо перечисленных обязательных переменных окружения будут справедливы все переменные окружения, используемые traefik и wg-easy
@@ -63,5 +50,4 @@ docker run --rm -ti xmartlabs/htpasswd <USERNAME> <PASSWORD> >> htpasswd/users
 | WG_PORT  | UDP-порт сервера wireguard  |
 | PORT  | TCP-порт панели wg-easy  |
 | LE_EMAIL  | email для запроса сертификата LetsEncrypt  |
-| NETWORK  | имя внутренней сети  |
 | LOG_LEVEL  | уровень логирования  |
