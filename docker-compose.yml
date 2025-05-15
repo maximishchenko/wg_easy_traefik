@@ -53,6 +53,11 @@ services:
       - "--providers.docker.network=traefik_network"
       - "--log.level=${LOG_LEVEL}"
       - "--entrypoints.http.address=:80"
+
+      - "--entrypoints.http.http.redirections.entryPoint.to=https"
+      - "--entrypoints.http.http.redirections.entryPoint.scheme=https"
+      - "--entrypoints.http.http.redirections.entrypoint.permanent=true"
+
       - "--entrypoints.https.address=:443"
       - "--certificatesresolvers.letsencrypt.acme.tlschallenge=true"
       - "--certificatesresolvers.letsencrypt.acme.email=${LE_EMAIL}"
@@ -66,4 +71,4 @@ services:
       - net
     ports:
       - "80:80"
-      - "443:443"
+      - "${PORT}:443"
