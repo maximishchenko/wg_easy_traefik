@@ -51,3 +51,7 @@ docker run --rm -it ghcr.io/wg-easy/wg-easy wgpw 'YOUR_PASSWORD'
 | PORT  | TCP-порт панели wg-easy  |
 | LE_EMAIL  | email для запроса сертификата LetsEncrypt  |
 | LOG_LEVEL  | уровень логирования  |
+| HTTPS_PANEL_PORT  | Порт подключения к веб-интерфейсу через https  |
+
+
+> При использовании нестандартного порта https могут быть проблемы с продлением сертификата letsencrypt

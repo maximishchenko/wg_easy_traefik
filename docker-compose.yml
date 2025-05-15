@@ -71,4 +71,4 @@ services:
       - net
     ports:
       - "80:80"
-      - "${PORT}:443"
+      - "${HTTPS_PANEL_PORT}:443"
